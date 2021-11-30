@@ -1,11 +1,15 @@
 import {
   createRouter,
   createWebHistory,
+  NavigationGuardNext,
   RouteLocationNormalized,
   RouteRecordRaw,
 } from "vue-router";
+import { loginGuard } from "./guards";
 import Default from "@/layouts/Default.vue";
 import Home from "@/views/Home.vue";
+import Auth from "@/layouts/Auth.vue";
+import Login from "@/views/auth/Login.vue";
 
 export const loginIgnore = {
   names: ["404", "403", "Login"],
@@ -33,6 +37,19 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/",
+    name: "Auth",
+    component: Auth,
+    redirect: "/auth",
+    children: [
+      {
+        path: "/auth/login",
+        name: "Login",
+        component: Login,
+      },
+    ],
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -47,5 +64,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach(
+  async (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+    await loginGuard(to, from, next);
+  }
+);
 
 export default router;

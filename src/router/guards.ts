@@ -31,9 +31,9 @@ const progressStart = (
 export const loginGuard = async (
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
-  next: NavigationGuardNext,
+  next: NavigationGuardNext
 ): Promise<void> => {
-  if (!loginIgnore.includes(to) && !await checkAuthorization()) {
+  if (!loginIgnore.includes(to) && !(await checkAuthorization())) {
     next({ path: "/auth/login" });
   } else {
     next();
