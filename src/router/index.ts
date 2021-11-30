@@ -1,11 +1,36 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/Home.vue";
+import {
+  createRouter,
+  createWebHistory,
+  RouteLocationNormalized,
+  RouteRecordRaw,
+} from "vue-router";
+import Default from "@/layouts/Default.vue";
+import Home from "@/views/Home.vue";
+
+export const loginIgnore = {
+  names: ["404", "403", "Login"],
+  paths: ["/auth/login"],
+  includes(route: RouteLocationNormalized): boolean {
+    return (
+      this.names.includes(route.name as string) ||
+      this.paths.includes(route.path)
+    );
+  },
+};
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "",
+    component: Default,
+    redirect: "/home",
+    children: [
+      {
+        path: "/home",
+        name: "Home",
+        component: Home,
+      },
+    ],
   },
   {
     path: "/about",
