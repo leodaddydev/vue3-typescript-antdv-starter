@@ -3,6 +3,15 @@
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
       <div class="logo" />
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
+        <a-sub-menu key="sub1">
+          <template #title>
+            <MenuOutlined />
+            <span> Components </span>
+          </template>
+          <a-menu-item key="table">
+            <router-link to="/components/table">Table</router-link>
+          </a-menu-item>
+        </a-sub-menu>
         <a-menu-item key="1">
           <user-outlined />
           <span>nav 1</span>
@@ -53,6 +62,7 @@ import {
   UploadOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  MenuOutlined,
 } from "@ant-design/icons-vue";
 import { defineComponent, ref } from "vue";
 export default defineComponent({
@@ -62,6 +72,7 @@ export default defineComponent({
     UploadOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
+    MenuOutlined,
   },
   setup() {
     return {
@@ -72,6 +83,9 @@ export default defineComponent({
 });
 </script>
 <style>
+#components-layout {
+  min-height: 100vh;
+}
 #components-layout .trigger {
   font-size: 18px;
   line-height: 64px;

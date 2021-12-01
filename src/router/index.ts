@@ -4,12 +4,14 @@ import {
   NavigationGuardNext,
   RouteLocationNormalized,
   RouteRecordRaw,
+  RouterView,
 } from "vue-router";
 import { loginGuard } from "./guards";
 import Default from "@/layouts/Default.vue";
 import Home from "@/views/Home.vue";
 import Auth from "@/layouts/Auth.vue";
 import Login from "@/views/auth/Login.vue";
+import Table from "@/views/Table.vue";
 
 export const loginIgnore = {
   names: ["404", "403", "Login"],
@@ -25,7 +27,6 @@ export const loginIgnore = {
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "",
     component: Default,
     redirect: "/home",
     children: [
@@ -33,6 +34,22 @@ const routes: Array<RouteRecordRaw> = [
         path: "/home",
         name: "Home",
         component: Home,
+      },
+      {
+        path: "/components",
+        name: "Components",
+        meta: {
+          title: "Components",
+        },
+        redirect: "/components/table",
+        component: RouterView,
+        children: [
+          {
+            path: "/components/table",
+            name: "Talbe",
+            component: Table,
+          },
+        ],
       },
     ],
   },
